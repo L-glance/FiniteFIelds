@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FF", "FF.csproj", "{DACDA57F-3C96-47B3-9B53-F98D36B9710E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFTest", "..\FFTest\FFTest.csproj", "{15F99678-1916-42B3-82E0-04E006226AC0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DACDA57F-3C96-47B3-9B53-F98D36B9710E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DACDA57F-3C96-47B3-9B53-F98D36B9710E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DACDA57F-3C96-47B3-9B53-F98D36B9710E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DACDA57F-3C96-47B3-9B53-F98D36B9710E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F99678-1916-42B3-82E0-04E006226AC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F99678-1916-42B3-82E0-04E006226AC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F99678-1916-42B3-82E0-04E006226AC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F99678-1916-42B3-82E0-04E006226AC0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FE74D380-0D26-43A8-BB3A-948D9E85DC3A}
+	EndGlobalSection
+EndGlobal
