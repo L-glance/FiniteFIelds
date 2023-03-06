@@ -16,6 +16,15 @@ namespace FFTest
             var element1 = new FiniteFieldElement(new int[] { 1, 1 }, GF4);
             var zero = GF4.GetZero();
             var element2 = element1 + zero;
+            Assert.That(element1, Is.EqualTo(element2));
+        }
+        [Test]
+        public void Substring()
+        {
+            var GF4 = new FiniteField(2, 2, new int[] { 1, 1, 1 });
+            var element1 = new FiniteFieldElement(new int[] { 1, 1 }, GF4);
+            var zero = GF4.GetZero();
+            var element2 = element1 - zero;
             Assert.That(element1.field.characteristic, Is.EqualTo(element2.field.characteristic));
         }
     }
