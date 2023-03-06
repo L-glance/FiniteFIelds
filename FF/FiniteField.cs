@@ -16,7 +16,7 @@ namespace FF
         public readonly int order;
         public readonly bool isPrimeField;
         public readonly bool isPolyCharacteristicEqualTwo;
-        public FiniteField(int characteristic, int[] irreduciblePoly, int degree)
+        public FiniteField(int characteristic, int degree, int[] irreduciblePoly)
         {
             IrreduciblePoly = irreduciblePoly;
             this.characteristic = characteristic;

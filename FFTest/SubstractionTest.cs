@@ -1,4 +1,5 @@
 ﻿using FF;
+using NUnit.Framework.Constraints;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace FFTest
             var element2 = new FiniteFieldElement(new int[] { 0, 1 }, GF4);
             var substract = element1 + element2;
             Assert.That(substract.Poly, Is.EqualTo(new int[] { 1, 0 }));
+            FiniteField GF3 = new FiniteField(3);
         }
     }
 }
