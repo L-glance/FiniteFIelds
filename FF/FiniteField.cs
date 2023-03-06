@@ -10,7 +10,7 @@ namespace FF
 {
     public class FiniteField
     {
-        private int[]? IrreduciblePoly { get; set; }
+        private int[] IrreduciblePoly { get; set; }
         public readonly int degree;
         public readonly int characteristic;
         public readonly int order;
@@ -30,6 +30,7 @@ namespace FF
             this.characteristic = order;
             this.order = order;
             isPrimeField = true;
+            IrreduciblePoly = new int[0];
         }
         public override string ToString()
         {
