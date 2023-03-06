@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Reflection.PortableExecutable;
+using System.Xml.Linq;
 
 namespace FF
 {
@@ -17,14 +18,23 @@ namespace FF
         }
         public static FiniteFieldElement operator +(FiniteFieldElement el1, FiniteFieldElement el2)
         {
+            // return if elements from different fields.
             if (!el1.field.Equals(el2.field))
                 throw new InvalidOperationException();
+            
             var field = el1.field;
+            var maxDegreeElement = el1.Poly.Length > el2.Poly.Length ? el1 : el2;
+            var minDegreeElement = el1.Equals(maxDegreeElement) ? el2 : el1;
 
-            var sum = new FiniteFieldElement(new int[field.degree], el1.field);
+            var sum = new FiniteFieldElement(new int[field.degree], maxDegreeElement.field);
 
-            for (var i = 0; i < field.degree; i++)
-                sum.Poly[i] = mod(el1.Poly[i] + el2.Poly[i], field.characteristic);
+            var index = 0;
+            for (;index < minDegreeElement.Poly.Length; index++)
+                sum.Poly[index] = mod(maxDegreeElement.Poly[index] + minDegreeElement.Poly[index], field.characteristic);
+            for(var i = index;i < maxDegreeElement.Poly.Length;i++)
+            {
+                sum.Poly[i] = maxDegreeElement.Poly[i];
+            }
             return sum;
         }
         public static FiniteFieldElement operator -(FiniteFieldElement el1, FiniteFieldElement el2)
@@ -58,6 +68,7 @@ namespace FF
                     multPoly[i + j] += el1.Poly[i] * el2.Poly[j];
                 }
             }
+
             return new FiniteFieldElement(multPoly, field);
         }
         public static FiniteFieldElement operator %(FiniteFieldElement el1, FiniteFieldElement el2)
@@ -93,6 +104,19 @@ namespace FF
 
             Array.Resize(ref remainder, divisorDegree);
             return new FiniteFieldElement(remainder, field);
+        }
+        public override bool Equals(object? obj)
+        {
+            if (obj is not FiniteFieldElement el) return false;
+            if (el.Poly.Length != this.Poly.Length) return false;
+            if (!el.field.Equals(this.field)) return false;
+            for(var i = 0; i < this.Poly.Length;i++)
+                if (el.Poly[i] != this.Poly[i]) return false;
+            return true;
+        }
+        public override int GetHashCode()
+        {
+            return field.GetHashCode() + Poly.GetHashCode();
         }
         private static int mod(int k, int n) => ((k %= n) < 0) ? k + n : k;
 
