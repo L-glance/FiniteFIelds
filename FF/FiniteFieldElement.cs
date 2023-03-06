@@ -28,13 +28,26 @@ namespace FF
                 throw new InvalidOperationException();
             
             var field = el1.field;
+            if (field.isPrimeField)
+                return AddingPrimeFieldElements(el1, el2);
+            else
+                return AddingNoPrimeFieldElements(el1, el2);
+        }
+        private static FiniteFieldElement AddingPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
+        {
+            el1.element = mod(el1.element + el2.element,el1.field.characteristic);
+            return el1;
+        }
+        private static FiniteFieldElement AddingNoPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
+        {
+            var field = el1.field;
             var maxDegreeElement = el1.Poly.Length > el2.Poly.Length ? el1 : el2;
             var minDegreeElement = el1.Equals(maxDegreeElement) ? el2 : el1;
 
             var sum = maxDegreeElement;
 
             var index = 0;
-            for (;index < minDegreeElement.Poly.Length; index++)
+            for (; index < minDegreeElement.Poly.Length; index++)
                 sum.Poly[index] = mod(maxDegreeElement.Poly[index] + minDegreeElement.Poly[index], field.characteristic);
             return sum;
         }

@@ -28,5 +28,14 @@ namespace FFTest
             var sum = element1 + element2;
             Assert.That(sum.Poly, Is.EqualTo(new int[] { 2, 0 }));
         }
+        [Test]
+        public void SumOverPrimeField1()
+        {
+            var GF7 = new FiniteField(7);
+            var element1 = new FiniteFieldElement(5,GF7);
+            var element2 = new FiniteFieldElement(6, GF7);
+            var sum = element1 + element2;
+            Assert.That(sum.element, Is.EqualTo(4));
+        }
     }
 }
