@@ -10,17 +10,26 @@ namespace FF
 {
     public class FiniteField
     {
-        private int[] _irreduciblePoly { get; set; }
+        private int[]? IrreduciblePoly { get; set; }
         public readonly int degree;
         public readonly int characteristic;
         public readonly int order;
-
+        public readonly bool isPrimeField;
+        public readonly bool isPolyCharacteristicEqualTwo;
         public FiniteField(int characteristic, int[] irreduciblePoly, int degree)
         {
-            _irreduciblePoly = irreduciblePoly;
+            IrreduciblePoly = irreduciblePoly;
             this.characteristic = characteristic;
             this.degree = degree;
             order = (int)Math.Pow(characteristic, degree);
+            isPrimeField = false;
+            isPolyCharacteristicEqualTwo = characteristic == 2 ? true : false;
+        }
+        public FiniteField(int order)
+        {
+            this.characteristic = order;
+            this.order = order;
+            isPrimeField = true;
         }
         public override string ToString()
         {
@@ -32,33 +41,35 @@ namespace FF
         }
         public string GetIrreduciblePoly()
         {
+            if (IrreduciblePoly == null)
+                return "Poly not exist";
             string polynomialString = "";
-            for (int i = 0; i < _irreduciblePoly.Length; i++)
+            for (int i = 0; i < IrreduciblePoly.Length; i++)
             {
 
                 // Skip zero coefficients
-                if (_irreduciblePoly[i] == 0)
+                if (IrreduciblePoly[i] == 0)
                     continue;
 
                 // Adding sign if degre isn't the degree of the polynomial
                 if (i != 0)
                 {
                     string sign = "";
-                    if (_irreduciblePoly[i] < 0)
+                    if (IrreduciblePoly[i] < 0)
                         sign = "-";
                     else
                         sign = "+";
                     polynomialString += sign;
                 }
                 // Adding coefficient if it's not 1 or it is constant term
-                if (Math.Abs(_irreduciblePoly[i]) != 1 || i == _irreduciblePoly.Length - 1)
-                    polynomialString += Math.Abs(_irreduciblePoly[i]);
+                if (Math.Abs(IrreduciblePoly[i]) != 1 || i == IrreduciblePoly.Length - 1)
+                    polynomialString += Math.Abs(IrreduciblePoly[i]);
 
                 // Adding the exponent 
-                if (i < _irreduciblePoly.Length - 2)
-                    polynomialString += "x^" + $"{_irreduciblePoly.Length - 1 - i}";
+                if (i < IrreduciblePoly.Length - 2)
+                    polynomialString += "x^" + $"{IrreduciblePoly.Length - 1 - i}";
                 // Not adding the exponent when it equals 1
-                else if (i == _irreduciblePoly.Length - 2)
+                else if (i == IrreduciblePoly.Length - 2)
                     polynomialString += "x";
             }
 
@@ -66,13 +77,21 @@ namespace FF
         }
         public override bool Equals(object? obj)
         {
-            var field = obj as FiniteField;
-            
-            if(field == null) return false;
-            
-            if(field.characteristic == this.characteristic && field.degree == this.degree) return true;
-
+            if (obj is not FiniteField field) return false;
+            if (field.characteristic == this.characteristic && field.degree == this.degree) return true;
             return false;
+        }
+        public override int GetHashCode()
+        {
+            return IrreduciblePoly.GetHashCode() + characteristic.GetHashCode() + isPrimeField.GetHashCode() + 666;
+        }
+        public FiniteFieldElement GetZero()
+        {
+            return new FiniteFieldElement(new int[] { 0 }, this);
+        }
+        public FiniteFieldElement GetOne()
+        {
+            return new FiniteFieldElement(new int[] { 1 }, this);  
         }
     }
 }
