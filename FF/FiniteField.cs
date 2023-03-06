@@ -33,6 +33,20 @@ namespace FF
             IrreduciblePoly = Array.Empty<int>();
             isPolyCharacteristicEqualTwo = characteristic == 2 ? true : false;
         }
+        public FiniteFieldElement GetZero()
+        {
+            if (isPrimeField)
+                return new FiniteFieldElement(0, this);
+            else
+                return new FiniteFieldElement(new int[] { 0 }, this);
+        }
+        public FiniteFieldElement GetOne()
+        {
+            if (isPrimeField)
+                return new FiniteFieldElement(1, this);
+            else
+                return new FiniteFieldElement(new int[] { 1 }, this);
+        }
         public override string ToString()
         {
             return $"name: GF({characteristic}^{degree})\\" +
@@ -87,13 +101,6 @@ namespace FF
         {
             return IrreduciblePoly.GetHashCode() + characteristic.GetHashCode() + isPrimeField.GetHashCode() + 666;
         }
-        public FiniteFieldElement GetZero()
-        {
-            return new FiniteFieldElement(new int[] { 0 }, this);
-        }
-        public FiniteFieldElement GetOne()
-        {
-            return new FiniteFieldElement(new int[] { 1 }, this);  
-        }
+        
     }
 }

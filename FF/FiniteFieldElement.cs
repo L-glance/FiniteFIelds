@@ -37,7 +37,7 @@ namespace FF
         {
             el1.element = mod(el1.element + el2.element,el1.field.characteristic);
             return el1;
-        }
+        }   
         private static FiniteFieldElement AddingNoPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             var field = el1.field;
@@ -85,6 +85,35 @@ namespace FF
                 substract.Poly[i] = mod(el1.Poly[i] - el2.Poly[i], field.characteristic);
             return substract;
         }
+        public static FiniteFieldElement operator *(FiniteFieldElement el1, FiniteFieldElement el2)
+        {
+            if (!el1.field.Equals(el2.field))
+                throw new InvalidOperationException();
+            var field = el1.field;
+            if (field.isPrimeField)
+                return MultiplicationPrimeFieldElements(el1, el2);
+            else
+                return MultiplicationNoPrimeFieldElements(el1, el2);
+            
+        }
+        private static FiniteFieldElement MultiplicationNoPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
+        {
+            var field = el1.field;
+            var multPoly = new int[el1.Poly.Length + el2.Poly.Length - 1];
+            for (var i = el1.Poly.Length - 1; i >= 0; i--)
+            {
+                for (var j = el2.Poly.Length - 1; j >= 0; j--)
+                {
+                    multPoly[i + j] += el1.Poly[i] * el2.Poly[j];
+                }
+            }
+            return new FiniteFieldElement(multPoly, field);
+        }
+        private static FiniteFieldElement MultiplicationPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
+        {
+            el1.element = mod(el1.element * el2.element,el1.field.characteristic);
+            return el1;
+        }
 
         public static FiniteFieldElement operator /(FiniteFieldElement el1, FiniteFieldElement el2)
         {
@@ -92,22 +121,7 @@ namespace FF
                 throw new InvalidOperationException();
             return null;
         }
-        public static FiniteFieldElement operator *(FiniteFieldElement el1, FiniteFieldElement el2)
-        {
-            if (!el1.field.Equals(el2.field))
-                throw new InvalidOperationException();
-            var field = el1.field;
-            var multPoly = new int[el1.Poly.Length + el2.Poly.Length - 1];
-            for(var i = el1.Poly.Length - 1; i >=0 ;i--)
-            {
-                for(var j = el2.Poly.Length -1;j >= 0;j--)
-                {
-                    multPoly[i + j] += el1.Poly[i] * el2.Poly[j];
-                }
-            }
-
-            return new FiniteFieldElement(multPoly, field);
-        }
+        
         public static FiniteFieldElement operator %(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             if (!el1.field.Equals(el2.field))
@@ -145,15 +159,14 @@ namespace FF
         public override bool Equals(object? obj)
         {
             if (obj is not FiniteFieldElement el) return false;
-            if (el.Poly.Length != this.Poly.Length) return false;
+            if(el.element != element) return false;
             if (!el.field.Equals(this.field)) return false;
-            for(var i = 0; i < this.Poly.Length;i++)
-                if (el.Poly[i] != this.Poly[i]) return false;
+            
             return true;
         }
         public override int GetHashCode()
         {
-            return field.GetHashCode() + Poly.GetHashCode();
+            return field.GetHashCode() + element.GetHashCode();
         }
         private static int mod(int k, int n) => ((k %= n) < 0) ? k + n : k;
 
