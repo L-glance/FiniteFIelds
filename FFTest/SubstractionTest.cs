@@ -13,7 +13,7 @@ namespace FFTest
         [Test]
         public void Substraction()
         {
-            var GF4 = new FiniteField(2,2 new int[] { 1, 1, 1 });
+            var GF4 = new FiniteField(2,2, new int[] { 1, 1, 1 });
             var element1 = new FiniteFieldElement(new int[] { 1, 1 }, GF4);
             var element2 = new FiniteFieldElement(new int[] { 0, 1 }, GF4);
             var substract = element1 + element2;
