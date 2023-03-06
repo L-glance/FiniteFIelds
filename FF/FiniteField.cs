@@ -31,6 +31,7 @@ namespace FF
             this.order = order;
             isPrimeField = true;
             IrreduciblePoly = Array.Empty<int>();
+            isPolyCharacteristicEqualTwo = characteristic == 2 ? true : false;
         }
         public override string ToString()
         {

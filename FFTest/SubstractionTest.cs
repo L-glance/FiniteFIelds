@@ -28,5 +28,23 @@ namespace FFTest
             var substract = element1 - element2;
             Assert.That(substract.Poly, Is.EqualTo(new int[] {2,2}));
         }
+        [Test]
+        public void SubstractionOverPrimeField1()
+        {
+            var GF3 = new FiniteField(3);
+            var element1 = new FiniteFieldElement(2, GF3);
+            var element2 = new FiniteFieldElement(1, GF3);
+            var substract = element1 - element2;
+            Assert.That(substract.element,Is.EqualTo(1));
+        }
+        [Test]
+        public void SubstractionOverPrimeField2()
+        {
+            var GF3 = new FiniteField(3);
+            var element1 = new FiniteFieldElement(1, GF3);
+            var element2 = new FiniteFieldElement(2, GF3);
+            var substract = element1 - element2;
+            Assert.That(substract.element, Is.EqualTo(2));
+        }
     }
 }
