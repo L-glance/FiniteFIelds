@@ -12,7 +12,7 @@ namespace FFTest
         [Test]
         public void Adding()
         {
-            var GF4 = new FiniteField(2, new int[] { 1, 1, 1 }, 2);
+            var GF4 = new FiniteField(2,2, new int[] { 1, 1, 1 });
             var element1 = new FiniteFieldElement(new int[] { 1, 1 }, GF4);
             var zero = GF4.GetZero();
             var element2 = element1 + zero;

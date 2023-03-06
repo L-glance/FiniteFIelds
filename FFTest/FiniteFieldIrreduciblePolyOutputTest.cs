@@ -14,7 +14,7 @@ namespace FFTest
         [Test]
         public void PolyDegreeMoreOne()
         {
-            FiniteField field = new FiniteField(2,new int[] {2,1,1},2);
+            FiniteField field = new FiniteField(2,2,new int[] {2,1,1});
             var irreduciblePoly = field.GetIrreduciblePoly();
             Assert.That(irreduciblePoly,Is.EqualTo("2x^2+x+1"));
         }
@@ -22,21 +22,21 @@ namespace FFTest
         [Test]
         public void PolyDegreeOne()
         {
-            FiniteField field = new FiniteField(3, new int[] {5,0}, 2);
+            FiniteField field = new FiniteField(3,2, new int[] {5,0});
             var irreduciblePoly = field.GetIrreduciblePoly();
             Assert.That(irreduciblePoly, Is.EqualTo("5x"));
         }
         [Test]
         public void PolyDegreeZeroOne()
         {
-            FiniteField field = new FiniteField(3, new int[] {1}, 2);
+            FiniteField field = new FiniteField(3, 2, new int[] { 1 });
             var irreduciblePoly = field.GetIrreduciblePoly();
             Assert.That(irreduciblePoly, Is.EqualTo("1"));
         }
         [Test]
         public void PolyDegreeZeroMoreOne()
         {
-            FiniteField field = new FiniteField(3, new int[] { 4 }, 2);
+            FiniteField field = new FiniteField(3,2, new int[] { 4 });
             var irreduciblePoly = field.GetIrreduciblePoly();
             Assert.That(irreduciblePoly, Is.EqualTo("4"));
         }

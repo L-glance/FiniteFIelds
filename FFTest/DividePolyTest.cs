@@ -12,7 +12,7 @@ namespace FFTest
         [Test]
         public void DivideWithMod()
         {
-            var GF4 = new FiniteField(2, new int[] { 1, 1, 1 }, 2);
+            var GF4 = new FiniteField(2, 2, new int[] { 1, 1, 1 });
             var element1 = new FiniteFieldElement(new int[] { 1, 2, 3, 4 }, GF4);
             var element2 = new FiniteFieldElement(new int[] { 1, -1 }, GF4);
             var mylt = element1 % element2;
@@ -21,7 +21,7 @@ namespace FFTest
         [Test]
         public void DoNotDivide()
         {
-            var GF4 = new FiniteField(2, new int[] { 1, 1, 1 }, 2);
+            var GF4 = new FiniteField(2, 2, new int[] { 1, 1, 1 });
             var element1 = new FiniteFieldElement(new int[] { 1, -1 }, GF4);
             var element2 = new FiniteFieldElement(new int[] { 1, 2, 3, 4 }, GF4);
             var mylt = element1 % element2;
@@ -30,7 +30,7 @@ namespace FFTest
         [Test]
         public void DivideWithoutMod()
         {
-            var GF4 = new FiniteField(2, new int[] { 1, 1, 1 }, 2);
+            var GF4 = new FiniteField(2, 2, new int[] { 1, 1, 1 });
             var element1 = new FiniteFieldElement(new int[] { 1,2, 1 }, GF4);
             var element2 = new FiniteFieldElement(new int[] { 1,1}, GF4);
             var mylt = element1 % element2;
