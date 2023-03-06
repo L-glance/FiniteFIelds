@@ -30,7 +30,7 @@ namespace FF
             this.characteristic = order;
             this.order = order;
             isPrimeField = true;
-            IrreduciblePoly = new int[0];
+            IrreduciblePoly = Array.Empty<int>();
         }
         public override string ToString()
         {
