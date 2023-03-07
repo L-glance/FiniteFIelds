@@ -156,6 +156,27 @@ namespace FF
             Array.Resize(ref remainder, divisorDegree);
             return new FiniteFieldElement(remainder, field);
         }
+        public FiniteFieldElement GetInverse()
+        {
+            if (field.isPrimeField)
+                return GetInversePrimeFieldElement();
+            else
+                return GetInverseNoPrimeFieldElement();
+        }
+        private FiniteFieldElement GetInverseNoPrimeFieldElement()
+        {
+            return null;
+        }
+
+        private FiniteFieldElement GetInversePrimeFieldElement()
+        {
+            element = (int)Math.Pow(element,field.characteristic - 2) % field.characteristic;
+            return this;
+        }
+        public FiniteFieldElement GetOpposite()
+        {
+            return this.field.GetZero() - this;
+        }
         public override bool Equals(object? obj)
         {
             if (obj is not FiniteFieldElement el) return false;
