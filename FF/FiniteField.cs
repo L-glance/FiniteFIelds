@@ -10,7 +10,7 @@ namespace FF
 {
     public class FiniteField
     {
-        private int[] IrreduciblePoly { get; set; }
+        public readonly int[] irreduciblePoly;
         public readonly int degree;
         public readonly int characteristic;
         public readonly int order;
@@ -18,7 +18,7 @@ namespace FF
         public readonly bool isPolyCharacteristicEqualTwo;
         public FiniteField(int characteristic, int degree, int[] irreduciblePoly)
         {
-            IrreduciblePoly = irreduciblePoly;
+            this.irreduciblePoly = irreduciblePoly;
             this.characteristic = characteristic;
             this.degree = degree;
             order = (int)Math.Pow(characteristic, degree);
@@ -30,7 +30,7 @@ namespace FF
             this.characteristic = order;
             this.order = order;
             isPrimeField = true;
-            IrreduciblePoly = Array.Empty<int>();
+            irreduciblePoly = Array.Empty<int>();
             isPolyCharacteristicEqualTwo = characteristic == 2 ? true : false;
         }
         public FiniteFieldElement GetZero()
@@ -57,35 +57,35 @@ namespace FF
         }
         public string GetIrreduciblePoly()
         {
-            if (IrreduciblePoly == null)
+            if (irreduciblePoly == null)
                 return "Poly not exist";
             string polynomialString = "";
-            for (int i = 0; i < IrreduciblePoly.Length; i++)
+            for (int i = 0; i < irreduciblePoly.Length; i++)
             {
 
                 // Skip zero coefficients
-                if (IrreduciblePoly[i] == 0)
+                if (irreduciblePoly[i] == 0)
                     continue;
 
                 // Adding sign if degre isn't the degree of the polynomial
                 if (i != 0)
                 {
                     string sign = "";
-                    if (IrreduciblePoly[i] < 0)
+                    if (irreduciblePoly[i] < 0)
                         sign = "-";
                     else
                         sign = "+";
                     polynomialString += sign;
                 }
                 // Adding coefficient if it's not 1 or it is constant term
-                if (Math.Abs(IrreduciblePoly[i]) != 1 || i == IrreduciblePoly.Length - 1)
-                    polynomialString += Math.Abs(IrreduciblePoly[i]);
+                if (Math.Abs(irreduciblePoly[i]) != 1 || i == irreduciblePoly.Length - 1)
+                    polynomialString += Math.Abs(irreduciblePoly[i]);
 
                 // Adding the exponent 
-                if (i < IrreduciblePoly.Length - 2)
-                    polynomialString += "x^" + $"{IrreduciblePoly.Length - 1 - i}";
+                if (i < irreduciblePoly.Length - 2)
+                    polynomialString += "x^" + $"{irreduciblePoly.Length - 1 - i}";
                 // Not adding the exponent when it equals 1
-                else if (i == IrreduciblePoly.Length - 2)
+                else if (i == irreduciblePoly.Length - 2)
                     polynomialString += "x";
             }
 
@@ -99,7 +99,7 @@ namespace FF
         }
         public override int GetHashCode()
         {
-            return IrreduciblePoly.GetHashCode() + characteristic.GetHashCode() + isPrimeField.GetHashCode() + 666;
+            return irreduciblePoly.GetHashCode() + characteristic.GetHashCode() + isPrimeField.GetHashCode() + 666;
         }
         
     }
