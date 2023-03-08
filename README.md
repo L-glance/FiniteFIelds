@@ -2,23 +2,23 @@
 > Все поля подразумеваются конечными.
 # Основные типы
 
-#1. Простое поле
-##1.1 Cоздание поля
+# 1. Простое поле
+## 1.1 Cоздание поля
 ```c#
 //Создание простого поля
 FiniteField GF3 = new FiniteField(3);
 ```
-##1.2 Методы поля
+## 1.2 Методы поля
 ### Получение Единичного элемента
 ### Получение нуля
 
-##1.3 Создание Элемента 
+## 1.3 Создание Элемента 
 ```c#
 //Создание элемента простого поля
 var GF11 = new FiniteField(11);
 FiniteFieldElement element = new FinitiFieldElement(4,GF11);
 ```
-##1.4 Операции над элементами
+## 1.4 Операции над элементами
 ### Сложение
 ```c#
 ```
@@ -41,7 +41,7 @@ FiniteFieldElement element = new FinitiFieldElement(4,GF11);
 ```c#
 ```
 
-#2. Расширенное поле
+# 2. Расширенное поле
 ```c#
 //Создание расширенного поля
 int[] irreduciblePolynomial = new int[] {1,1,1};
@@ -49,14 +49,14 @@ int characteristic = 2;
 int degree = 2;
 FiniteField GF4 = new FiniteField(characteristic, degree, new int[] { 1, 1, 1 }); 
 ```
-##2.1 Создание элемента
+## 2.1 Создание элемента
 ```c#
 //создание элемента расширенного поля
 var GF9 = new FiniteField(3,2,new int[]{1,1,2});
 FiniteFieldElement element = new FiniteFieldElement(new int[]{2,1},GF9)
 #Операции над элементами конечного поля
 ```
-##2.2 Операции над элементами
+## 2.2 Операции над элементами
 ### Сложение
 ```c#
 ```
