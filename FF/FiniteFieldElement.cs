@@ -1,4 +1,5 @@
 ﻿using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 
 namespace FF
@@ -107,7 +108,28 @@ namespace FF
                     multPoly[i + j] += el1.Poly[i] * el2.Poly[j];
                 }
             }
-            return new FiniteFieldElement(multPoly, field);
+            multPoly = DividePolynomials(multPoly, field.irreduciblePoly);
+            for(var i = 0; i< multPoly.Length;i++)
+                multPoly[i] = mod(multPoly[i],field.characteristic);
+            multPoly = CutFirstZeros(multPoly);
+            return new FiniteFieldElement(multPoly,field);
+        }
+        static int[] DividePolynomials(int[] dividend, int[] divisor)
+        {
+            if (dividend.Length < divisor.Length) return dividend;
+            var quotient = new int[dividend.Length - divisor.Length + 1];
+            var remainder = dividend;
+
+            for (var i = 0; i < quotient.Length; i++)
+            {
+                var coef = remainder[i] / divisor[0];
+                quotient[i] = coef;
+                for (var j = 0; j < divisor.Length; j++)
+                {
+                    remainder[i + j] = remainder[i + j] - coef * divisor[j];
+                }
+            }
+            return remainder;
         }
         private static FiniteFieldElement MultiplicationPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
         {
@@ -119,42 +141,23 @@ namespace FF
         {
             if (!el1.field.Equals(el2.field))
                 throw new InvalidOperationException();
-            return null;
+            if (el2.element.Equals(el2.field.GetZero()))
+                throw new DivideByZeroException();
+            return el1 * el2.GetInverse();
         }
+
         
-        public static FiniteFieldElement operator %(FiniteFieldElement el1, FiniteFieldElement el2)
+
+        
+        public FiniteFieldElement Pow(int degree)
         {
-            if (!el1.field.Equals(el2.field))
-                throw new InvalidOperationException();
-
-            var field = el1.field;
-            var dividend = el1.Poly;
-            var divisor = el2.Poly;
-
-            int dividendDegree = dividend.Length - 1;
-            int divisorDegree = divisor.Length - 1;
-
-            if (dividendDegree < divisorDegree)
-            {
-                return el1;
-            }
-
-            int[] quotient = new int[dividendDegree - divisorDegree + 1];
-            int[] remainder = new int[dividendDegree + 1];
-            Array.Copy(dividend, remainder, dividendDegree + 1);
-
-            for (int i = dividendDegree - divisorDegree; i >= 0; i--)
-            {
-                quotient[i] = remainder[i + divisorDegree] / divisor[divisorDegree];
-
-                for (int j = i + divisorDegree; j >= i; j--)
-                {
-                    remainder[j] -= quotient[i] * divisor[j - i];
-                }
-            }
-
-            Array.Resize(ref remainder, divisorDegree);
-            return new FiniteFieldElement(remainder, field);
+            FiniteFieldElement el = this;
+            if (element == 0) return field.GetZero();
+            if (degree == 0) return field.GetOne();
+            if (degree % 2 == 0)
+                return Pow(degree / 2) * Pow(degree / 2);
+            else
+                return el * Pow(degree - 1);
         }
         public FiniteFieldElement GetInverse()
         {
@@ -165,7 +168,7 @@ namespace FF
         }
         private FiniteFieldElement GetInverseNoPrimeFieldElement()
         {
-            return null;
+            return Pow(field.order - 2);
         }
 
         private FiniteFieldElement GetInversePrimeFieldElement()
@@ -190,6 +193,22 @@ namespace FF
             return field.GetHashCode() + element.GetHashCode();
         }
         private static int mod(int k, int n) => ((k %= n) < 0) ? k + n : k;
-
+        private static int[] CutFirstZeros(int[] poly)
+        {
+            if (poly[0] != 0) return poly;
+            var list = new List<int>();
+            for(var i = 0;i < poly.Length;i++)
+            {
+                if (poly[i] != 0)
+                {
+                    for(var j = i;j < poly.Length;j++)
+                    {
+                        list.Add(poly[j]);
+                    }
+                    break;
+                }
+            }
+            return list.ToArray();
+        }
     }
 }
