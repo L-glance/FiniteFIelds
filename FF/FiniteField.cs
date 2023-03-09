@@ -55,6 +55,30 @@ namespace FF
                 $"order {(int)Math.Pow(characteristic, degree)}\\" +
                 $"irreducible_poly: {GetIrreduciblePoly()}";
         }
+        public FiniteFieldElement GetFiniteFieldElement(byte[] byteArray)
+        {
+            if (!isPolyCharacteristicEqualTwo) throw new InvalidOperationException("Невозможно преобразовать массив байтов в элемент поля");
+            var element = BitConverter.ToInt32(byteArray, 0);
+            if (element > order - 1) throw new InvalidOperationException("Выход за пределы поля");
+            if (element < 2)
+                return new FiniteFieldElement(element, this);
+            else
+                return new FiniteFieldElement(GetArrayBinaryRepresentation(element),this);
+        }
+
+        private int[] GetArrayBinaryRepresentation(int element)
+        {
+            var representation = new List<int>();
+            while(element > 0)
+            {
+                var m = element % 2;
+                element /= 2;
+                representation.Add(m);
+            }
+            representation.Reverse();
+            return representation.ToArray();
+        }
+
         public string GetIrreduciblePoly()
         {
             if (irreduciblePoly == null)

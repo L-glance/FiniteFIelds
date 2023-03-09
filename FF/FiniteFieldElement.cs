@@ -19,9 +19,18 @@ namespace FF
         {
             this.field = field;
             this.Poly = Poly;
-            for(var i =  Poly.Length-1; i >= 0; i--)
-                element += Poly[i] * (int)Math.Pow(field.characteristic, i);
+            this.element = GetElementFromPoly();
         }
+
+        private int GetElementFromPoly()
+        {
+            var degree = 0;
+            var element = 0;
+            for (var i = Poly.Length - 1; i >= 0; i--)
+                element += Poly[i] * (int)Math.Pow(field.characteristic, degree++);
+            return element;
+        }
+
         public static FiniteFieldElement operator +(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             // return if elements from different fields.
@@ -145,9 +154,6 @@ namespace FF
                 throw new DivideByZeroException();
             return el1 * el2.GetInverse();
         }
-
-        
-
         
         public FiniteFieldElement Pow(int degree)
         {
@@ -179,6 +185,11 @@ namespace FF
         public FiniteFieldElement GetOpposite()
         {
             return this.field.GetZero() - this;
+        }
+        public byte[] ConvertToByte()
+        {
+            if (!field.isPolyCharacteristicEqualTwo) throw new InvalidOperationException("Попытка конвертации поля характеристики не 2");
+            return BitConverter.GetBytes(element);
         }
         public override bool Equals(object? obj)
         {
