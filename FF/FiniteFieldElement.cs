@@ -1,8 +1,4 @@
-﻿using System.Reflection.PortableExecutable;
-using System.Runtime.CompilerServices;
-using System.Xml.Linq;
-
-namespace FF
+﻿namespace FF
 {
     public class FiniteFieldElement
     {

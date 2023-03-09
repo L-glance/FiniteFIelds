@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FF
+﻿namespace FF
 {
     public class FiniteField
     {
@@ -125,6 +117,5 @@ namespace FF
         {
             return irreduciblePoly.GetHashCode() + characteristic.GetHashCode() + isPrimeField.GetHashCode() + 666;
         }
-        
     }
 }
