@@ -134,3 +134,17 @@ var GF11 = new FiniteField(11);
   FiniteFieldElement a = new FiniteFieldElement(new int[] { 1, 0, 0, 0, 0 }, GF32); // x^4 ~ 16
   FiniteFieldElement inv = a.GetOpposite(); // x^4 ~ 16
 ```
+# 3 Дополнительные операции
+Если поле имеет характеристики 2, возможна конвертация элементов поля в байты
+```c#
+  var GF2 = new FiniteField(2);
+  FiniteFieldElement a = new FiniteFieldElement(1);
+  byte[] byteArray = a.ConvertToByte();
+```
+А также Конвертация байтов в элементы поля
+```c#
+  var GF2 = new FiniteField(2);
+  FiniteFieldElement a = new FiniteFieldElement(1);
+  byte[] byteArray = new byte[] { 31, 0, 0, 0}
+  FiniteFieldElement a = GF32.GetFiniteFieldElement(byteArray); // x^4+x^3+x^2+x+1 ~ 31
+```
