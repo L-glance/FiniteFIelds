@@ -143,7 +143,7 @@ var GF11 = new FiniteField(11);
 ```
 А также Конвертация байтов в элементы поля
 ```c#
-  var GF2 = new FiniteField(2);
+  var GF32 = new FiniteField(2,5,new int[] {1,0,0,1,0,1});;
   FiniteFieldElement a = new FiniteFieldElement(1);
   byte[] byteArray = new byte[] { 31, 0, 0, 0}
   FiniteFieldElement a = GF32.GetFiniteFieldElement(byteArray); // x^4+x^3+x^2+x+1 ~ 31
