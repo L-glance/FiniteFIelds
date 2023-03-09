@@ -56,10 +56,12 @@ namespace FF
 
             var sum = maxDegreeElement;
 
-            var index = 0;
-            for (; index < minDegreeElement.Poly.Length; index++)
-                sum.Poly[index] = mod(maxDegreeElement.Poly[index] + minDegreeElement.Poly[index], field.characteristic);
-            return sum;
+            for (var i = minDegreeElement.Poly.Length - 1; i >= 0; i--)
+            {
+                var maxElementDegree = i + maxDegreeElement.Poly.Length - minDegreeElement.Poly.Length;
+                sum.Poly[maxElementDegree] = mod(maxDegreeElement.Poly[maxElementDegree] + minDegreeElement.Poly[i], field.characteristic);
+            }
+            return new FiniteFieldElement(CutFirstZeros(sum.Poly), field);
         }
         public static FiniteFieldElement operator -(FiniteFieldElement el1, FiniteFieldElement el2)
         {
@@ -84,16 +86,14 @@ namespace FF
             if (el1.Poly.Length < el2.Poly.Length)
             {
                 var difference = el2.Poly.Length - el1.Poly.Length;
-                var el1PolyExtended = new int[el2.Poly.Length];
-                for (var i = 0; i < difference; i++)
-                    el1PolyExtended[i] = 0;
-                for (var i = difference; i < el2.Poly.Length; i++)
-                    el1PolyExtended[i] = el1.Poly[i];
-                el1.Poly = el1PolyExtended;
+                var newPoly = new int[el2.Poly.Length];
+                for(var i = difference; i < el2.Poly.Length;i++)
+                    newPoly[i] = el1.Poly[i - difference];
+                el1.Poly = newPoly;
             }
             for (var i = 0; i < el2.Poly.Length; i++)
                 substract.Poly[i] = mod(el1.Poly[i] - el2.Poly[i], field.characteristic);
-            return substract;
+            return new FiniteFieldElement(substract.Poly, field);
         }
         public static FiniteFieldElement operator *(FiniteFieldElement el1, FiniteFieldElement el2)
         {
@@ -142,8 +142,8 @@ namespace FF
         }
         private static FiniteFieldElement MultiplicationPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
         {
-            el1.element = mod(el1.element * el2.element,el1.field.characteristic);
-            return el1;
+            var element = mod(el1.element * el2.element,el1.field.characteristic);
+            return new FiniteFieldElement(element,el1.field);
         }
 
         public static FiniteFieldElement operator /(FiniteFieldElement el1, FiniteFieldElement el2)
@@ -179,8 +179,8 @@ namespace FF
 
         private FiniteFieldElement GetInversePrimeFieldElement()
         {
-            element = (int)Math.Pow(element,field.characteristic - 2) % field.characteristic;
-            return this;
+            var element = (int)Math.Pow(this.element,field.characteristic - 2) % field.characteristic;
+            return new FiniteFieldElement(element,field);
         }
         public FiniteFieldElement GetOpposite()
         {
@@ -208,17 +208,18 @@ namespace FF
         {
             if (poly[0] != 0) return poly;
             var list = new List<int>();
+            bool isAllZero = true;
             for(var i = 0;i < poly.Length;i++)
             {
                 if (poly[i] != 0)
                 {
                     for(var j = i;j < poly.Length;j++)
-                    {
                         list.Add(poly[j]);
-                    }
+                    isAllZero = false;
                     break;
                 }
             }
+            if (isAllZero) list.Add(0);
             return list.ToArray();
         }
     }
