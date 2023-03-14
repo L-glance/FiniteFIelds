@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4Pgd7KFulWK1nFLlBedws1BBFTxghLl6FtSL7989F9vzSusNwC0aNL5nmDJPSzpSjBbQhB7tnNyOeHuCIuhBXg==",
+  "dgSpecHash": "MP0Hnpb+0XSrG60oRdW68FPjH2CzKEPExkA4sg+6+7aqILy7rljVEm7OV9Dwa2ZSnZM0G89T05TbhbtS2BuETw==",
   "success": true,
-  "projectFilePath": "C:\\my\\VSCODEprojects\\CAKOD\\FIELDS\\FF\\FF.csproj",
+  "projectFilePath": "C:\\my\\VSCODEprojects\\CAKOD\\MyAES\\FiniteFields\\FF\\FF.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

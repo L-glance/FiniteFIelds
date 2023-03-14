@@ -52,7 +52,7 @@
             if (!isPolyCharacteristicEqualTwo) throw new InvalidOperationException("Невозможно преобразовать массив байтов в элемент поля");
             var element = BitConverter.ToInt32(byteArray, 0);
             if (element > order - 1) throw new InvalidOperationException("Выход за пределы поля");
-            if (element < 2)
+            if (order <= 2)
                 return new FiniteFieldElement(element, this);
             else
                 return new FiniteFieldElement(GetArrayBinaryRepresentation(element),this);

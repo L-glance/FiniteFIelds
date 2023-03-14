@@ -177,7 +177,7 @@
         private static int mod(int k, int n) => ((k %= n) < 0) ? k + n : k;
         private static int[] CutFirstZeros(int[] poly)
         {
-            if (poly[0] != 0) return poly;
+            if (poly.Length == 0 || poly[0] != 0) return poly;
             var list = new List<int>();
             bool isAllZero = true;
             for(var i = 0;i < poly.Length;i++)
