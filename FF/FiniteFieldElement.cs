@@ -17,7 +17,6 @@
             this.Poly = Poly;
             this.element = GetElementFromPoly();
         }
-
         private int GetElementFromPoly()
         {
             var degree = 0;
@@ -26,7 +25,6 @@
                 element += Poly[i] * (int)Math.Pow(field.characteristic, degree++);
             return element;
         }
-
         public static FiniteFieldElement operator +(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             // return if elements from different fields.
@@ -49,9 +47,7 @@
             var field = el1.field;
             var maxDegreeElement = el1.Poly.Length > el2.Poly.Length ? el1 : el2;
             var minDegreeElement = el1.Equals(maxDegreeElement) ? el2 : el1;
-
             var sum = maxDegreeElement;
-
             for (var i = minDegreeElement.Poly.Length - 1; i >= 0; i--)
             {
                 var maxElementDegree = i + maxDegreeElement.Poly.Length - minDegreeElement.Poly.Length;
@@ -68,7 +64,6 @@
                 return SubstractionPrimeFieldElements(el1, el2);
             else
                 return SubstractionNoPrimeFieldElements(el1, el2);
-            
         }
         private static FiniteFieldElement SubstractionPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
         {
@@ -100,19 +95,14 @@
                 return MultiplicationPrimeFieldElements(el1, el2);
             else
                 return MultiplicationNoPrimeFieldElements(el1, el2);
-            
         }
         private static FiniteFieldElement MultiplicationNoPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             var field = el1.field;
             var multPoly = new int[el1.Poly.Length + el2.Poly.Length - 1];
             for (var i = el1.Poly.Length - 1; i >= 0; i--)
-            {
                 for (var j = el2.Poly.Length - 1; j >= 0; j--)
-                {
                     multPoly[i + j] += el1.Poly[i] * el2.Poly[j];
-                }
-            }
             multPoly = DividePolynomials(multPoly, field.irreduciblePoly);
             for(var i = 0; i< multPoly.Length;i++)
                 multPoly[i] = mod(multPoly[i],field.characteristic);
@@ -130,9 +120,7 @@
                 var coef = remainder[i] / divisor[0];
                 quotient[i] = coef;
                 for (var j = 0; j < divisor.Length; j++)
-                {
                     remainder[i + j] = remainder[i + j] - coef * divisor[j];
-                }
             }
             return remainder;
         }
@@ -141,7 +129,6 @@
             var element = mod(el1.element * el2.element,el1.field.characteristic);
             return new FiniteFieldElement(element,el1.field);
         }
-
         public static FiniteFieldElement operator /(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             if (!el1.field.Equals(el2.field))
@@ -150,7 +137,6 @@
                 throw new DivideByZeroException();
             return el1 * el2.GetInverse();
         }
-        
         public FiniteFieldElement Pow(int degree)
         {
             FiniteFieldElement el = this;
@@ -168,20 +154,13 @@
             else
                 return GetInverseNoPrimeFieldElement();
         }
-        private FiniteFieldElement GetInverseNoPrimeFieldElement()
-        {
-            return Pow(field.order - 2);
-        }
-
+        private FiniteFieldElement GetInverseNoPrimeFieldElement() => Pow(field.order - 2);
         private FiniteFieldElement GetInversePrimeFieldElement()
         {
             var element = (int)Math.Pow(this.element,field.characteristic - 2) % field.characteristic;
             return new FiniteFieldElement(element,field);
         }
-        public FiniteFieldElement GetOpposite()
-        {
-            return this.field.GetZero() - this;
-        }
+        public FiniteFieldElement GetOpposite() => this.field.GetZero() - this;
         public byte[] ConvertToByte()
         {
             if (!field.isPolyCharacteristicEqualTwo) throw new InvalidOperationException("Попытка конвертации поля характеристики не 2");
@@ -192,13 +171,9 @@
             if (obj is not FiniteFieldElement el) return false;
             if(el.element != element) return false;
             if (!el.field.Equals(this.field)) return false;
-            
             return true;
         }
-        public override int GetHashCode()
-        {
-            return field.GetHashCode() + element.GetHashCode();
-        }
+        public override int GetHashCode() => field.GetHashCode() + element.GetHashCode();
         private static int mod(int k, int n) => ((k %= n) < 0) ? k + n : k;
         private static int[] CutFirstZeros(int[] poly)
         {
