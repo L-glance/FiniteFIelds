@@ -57,20 +57,8 @@
             else
                 return new FiniteFieldElement(GetArrayBinaryRepresentation(element),this);
         }
-
-        private int[] GetArrayBinaryRepresentation(int element)
-        {
-            var representation = new List<int>();
-            while(element > 0)
-            {
-                var m = element % 2;
-                element /= 2;
-                representation.Add(m);
-            }
-            representation.Reverse();
-            return representation.ToArray();
-        }
-
+        // char subtraction is an integer
+        private int[] GetArrayBinaryRepresentation(int element) => Convert.ToString(element,2).Select(c => c - '0').ToArray();
         public string GetIrreduciblePoly()
         {
             if (irreduciblePoly == null)
@@ -78,11 +66,9 @@
             string polynomialString = "";
             for (int i = 0; i < irreduciblePoly.Length; i++)
             {
-
                 // Skip zero coefficients
                 if (irreduciblePoly[i] == 0)
                     continue;
-
                 // Adding sign if degre isn't the degree of the polynomial
                 if (i != 0)
                 {
@@ -104,7 +90,6 @@
                 else if (i == irreduciblePoly.Length - 2)
                     polynomialString += "x";
             }
-
             return polynomialString;
         }
         public override bool Equals(object? obj)
