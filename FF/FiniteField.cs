@@ -100,7 +100,7 @@
         }
         public override int GetHashCode()
         {
-            return irreduciblePoly.GetHashCode() + characteristic.GetHashCode() + isPrimeField.GetHashCode() + 666;
+            return irreduciblePoly.GetHashCode() + characteristic.GetHashCode() + isPrimeField.GetHashCode();
         }
     }
 }
