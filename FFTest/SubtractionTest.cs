@@ -8,43 +8,43 @@ using System.Threading.Tasks;
 
 namespace FFTest
 {
-    public class SubstractionTest
+    public class SubtractionTest
     {
         [Test]
-        public void Substraction()
+        public void Subtraction()
         {
             var GF4 = new FiniteField(2,2, new int[] { 1, 1, 1 });
             var element1 = new FiniteFieldElement(new int[] { 1, 1 }, GF4);
             var element2 = new FiniteFieldElement(new int[] { 0, 1 }, GF4);
-            var substract = element1 + element2;
-            Assert.That(substract.Poly, Is.EqualTo(new int[] { 1, 0 }));
+            var subtract = element1 + element2;
+            Assert.That(subtract.Poly, Is.EqualTo(new int[] { 1, 0 }));
         }
         [Test]
-        public void Substraction2()
+        public void Subtraction2()
         {
             var GF9 = new FiniteField(3, 2, new int[] { 1, 1, 2 });
             var element1 = new FiniteFieldElement(new int[] {1,2}, GF9);
             var element2 = new FiniteFieldElement(new int[] {2,0}, GF9);
-            var substract = element1 - element2;
-            Assert.That(substract.Poly, Is.EqualTo(new int[] {2,2}));
+            var subtract = element1 - element2;
+            Assert.That(subtract.Poly, Is.EqualTo(new int[] {2,2}));
         }
         [Test]
-        public void SubstractionOverPrimeField1()
+        public void SubtractionOverPrimeField1()
         {
             var GF3 = new FiniteField(3);
             var element1 = new FiniteFieldElement(2, GF3);
             var element2 = new FiniteFieldElement(1, GF3);
-            var substract = element1 - element2;
-            Assert.That(substract.element,Is.EqualTo(1));
+            var subtract = element1 - element2;
+            Assert.That(subtract.element,Is.EqualTo(1));
         }
         [Test]
-        public void SubstractionOverPrimeField2()
+        public void SubtractionOverPrimeField2()
         {
             var GF3 = new FiniteField(3);
             var element1 = new FiniteFieldElement(1, GF3);
             var element2 = new FiniteFieldElement(2, GF3);
-            var substract = element1 - element2;
-            Assert.That(substract.element, Is.EqualTo(2));
+            var subtract = element1 - element2;
+            Assert.That(subtract.element, Is.EqualTo(2));
         }
     }
 }

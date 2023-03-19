@@ -61,16 +61,16 @@
                 throw new InvalidOperationException();
             var field = el1.field;
             if (field.isPrimeField)
-                return SubstractionPrimeFieldElements(el1, el2);
+                return SubtractionPrimeFieldElements(el1, el2);
             else
-                return SubstractionNoPrimeFieldElements(el1, el2);
+                return SubtractionNoPrimeFieldElements(el1, el2);
         }
-        private static FiniteFieldElement SubstractionPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
+        private static FiniteFieldElement SubtractionPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             el1.element = mod(el1.element - el2.element,el1.field.characteristic);
             return el1;
         }
-        private static FiniteFieldElement SubstractionNoPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
+        private static FiniteFieldElement SubtractionNoPrimeFieldElements(FiniteFieldElement el1, FiniteFieldElement el2)
         {
             var field = el1.field;
             var substract = el1;
