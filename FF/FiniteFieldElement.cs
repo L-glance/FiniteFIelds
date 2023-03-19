@@ -7,12 +7,14 @@
         public int element;
         public FiniteFieldElement(int element,FiniteField field)
         {
+            if (!field.isPrimeField) throw new ArgumentException("field must be prime");
             Poly = Array.Empty<int>();
             this.field = field;
             this.element = element;
         }
         public FiniteFieldElement(int[] Poly,FiniteField field)
         {
+            if(field.isPrimeField) throw new ArgumentException("field must be expanded");
             this.field = field;
             this.Poly = Poly;
             this.element = GetElementFromPoly();
