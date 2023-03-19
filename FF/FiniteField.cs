@@ -14,7 +14,7 @@
             this.characteristic = characteristic;
             this.degree = degree;
             order = (int)Math.Pow(characteristic, degree);
-            isPrimeField = false;
+            isPrimeField = degree == 1 ? true : false;
             isPolyCharacteristicEqualTwo = characteristic == 2 ? true : false;
         }
         public FiniteField(int order)
@@ -22,7 +22,7 @@
             this.characteristic = order;
             this.order = order;
             isPrimeField = true;
-            irreduciblePoly = Array.Empty<int>();
+            irreduciblePoly = new int[] { order };
             isPolyCharacteristicEqualTwo = characteristic == 2 ? true : false;
         }
         public FiniteFieldElement GetZero()
