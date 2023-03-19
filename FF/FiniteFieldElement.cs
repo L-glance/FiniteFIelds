@@ -53,7 +53,7 @@
                 var maxElementDegree = i + maxDegreeElement.Poly.Length - minDegreeElement.Poly.Length;
                 sum.Poly[maxElementDegree] = mod(maxDegreeElement.Poly[maxElementDegree] + minDegreeElement.Poly[i], field.characteristic);
             }
-            return new FiniteFieldElement(CutFirstZeros(sum.Poly), field);
+            return new FiniteFieldElement(CutFirstZeroes(sum.Poly), field);
         }
         public static FiniteFieldElement operator -(FiniteFieldElement el1, FiniteFieldElement el2)
         {
@@ -106,7 +106,7 @@
             multPoly = DividePolynomials(multPoly, field.irreduciblePoly);
             for(var i = 0; i< multPoly.Length;i++)
                 multPoly[i] = mod(multPoly[i],field.characteristic);
-            multPoly = CutFirstZeros(multPoly);
+            multPoly = CutFirstZeroes(multPoly);
             return new FiniteFieldElement(multPoly,field);
         }
         static int[] DividePolynomials(int[] dividend, int[] divisor)
@@ -175,7 +175,7 @@
         }
         public override int GetHashCode() => field.GetHashCode() + element.GetHashCode();
         private static int mod(int k, int n) => ((k %= n) < 0) ? k + n : k;
-        private static int[] CutFirstZeros(int[] poly)
+        private static int[] CutFirstZeroes(int[] poly)
         {
             if (poly.Length == 0 || poly[0] != 0) return poly;
             var list = new List<int>();
