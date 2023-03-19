@@ -10,6 +10,8 @@
         public readonly bool isPolyCharacteristicEqualTwo;
         public FiniteField(int characteristic, int degree, int[] irreduciblePoly)
         {
+            this.irreduciblePoly = new int[irreduciblePoly.Length];
+            Array.Copy(irreduciblePoly, this.irreduciblePoly, irreduciblePoly.Length);
             this.irreduciblePoly = irreduciblePoly;
             this.characteristic = characteristic;
             this.degree = degree;

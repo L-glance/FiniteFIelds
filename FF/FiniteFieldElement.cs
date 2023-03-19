@@ -15,7 +15,8 @@
         public FiniteFieldElement(int[] Poly,FiniteField field)
         {
             this.field = field;
-            this.Poly = Poly;
+            this.Poly = new int[Poly.Length];
+            Array.Copy(Poly,this.Poly,Poly.Length);
             this.element = GetElementFromPoly();
         }
         private int GetElementFromPoly()
