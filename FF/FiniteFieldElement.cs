@@ -143,7 +143,10 @@
             if (element == 0) return field.GetZero();
             if (degree == 0) return field.GetOne();
             if (degree % 2 == 0)
-                return Pow(degree / 2) * Pow(degree / 2);
+            {
+                var tempPow = Pow(degree / 2);
+                return tempPow * tempPow;
+            }
             else
                 return el * Pow(degree - 1);
         }
